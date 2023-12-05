@@ -12,4 +12,3 @@ EXPOSE 8080
 ARG REDIS_HOST
 ARG REDIS_PORT
 CMD ["java","-jar","./demo.jar"]
-

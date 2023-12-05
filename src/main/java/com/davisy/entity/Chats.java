@@ -1,6 +1,11 @@
 package com.davisy.entity;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.TimeZone;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -8,6 +13,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,10 +30,12 @@ public class Chats {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	int id;
 	String name_chats;
+	@Temporal(TemporalType.TIMESTAMP)
+	Calendar day_create = GregorianCalendar.getInstance(TimeZone.getTimeZone("GMT+7"));
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "chats")
-//	@JoinColumn(name = "id")
 	List<Messages> messages;
-	boolean isFriend;
-	boolean status;
+	boolean isfriend = true;
+	
 }

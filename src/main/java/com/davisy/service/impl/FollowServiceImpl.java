@@ -29,7 +29,10 @@ public class FollowServiceImpl implements FollowService {
 
 	@Override
 	public void delete(int id1, int id2) {
+//			Follower follower =
+//		followDAO.unFollow(id1, id2);
 		followDAO.delete(followDAO.unFollow(id1, id2));
+		
 	}
 
 	@Override
@@ -45,10 +48,59 @@ public class FollowServiceImpl implements FollowService {
 	@Override
 	public boolean checkFriend(int id1, int id2) {
 		List<Follower> list = followDAO.findAllSuggest(id1, id2);
-		if (list.size()<2)
+		if (list.size() < 2)
 			return false;
 		else
 			return true;
+	}
+
+	@Override
+	public List<Follower> findALlFriend(int follow_id, int user_id) {
+		List<Follower> list = followDAO.findALlFriend(follow_id, user_id);
+		if (list == null)
+			return null;
+		return list;
+	}
+
+	@Override
+	public List<Integer> findAllFollowingUser(int id) {
+		List<Integer> list = followDAO.findAllFollowingUser(id);
+		if (list == null)
+			return null;
+		return list;
+	}
+
+	@Override
+	public boolean checkFollow(int id1, int id2) {
+		Follower follower = followDAO.checkFollow(id1, id2);
+		if (follower == null)
+			return false;
+		return true;
+	}
+
+	@Override
+	public List<Object[]> findAllFollowing(int id) {
+		return followDAO.findAllFollowing(id);
+	}
+
+	@Override
+	public List<Object[]> findAllFollowerUser(int id) {
+		return followDAO.findAllFollowerUser(id);
+	}
+
+	@Override
+	public List<Object[]> findAllFriend(int id) {
+		return followDAO.findAllFriend(id);
+	}
+
+	@Override
+	public List<Object[]> loadDataSuggest(int id) {
+		return followDAO.loadDataSuggest(id);
+	}
+
+	@Override
+	public List<Object[]> loadDataSuggestRegister(int id) {
+		return followDAO.loadDataSuggestRegister(id);
 	}
 
 }

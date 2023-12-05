@@ -1,6 +1,7 @@
 package com.davisy.model.chat;
 
 import java.awt.TrayIcon.MessageType;
+import java.util.Calendar;
 import java.util.Date;
 
 import lombok.AllArgsConstructor;
@@ -19,9 +20,10 @@ public class UserModel {
 	private String avatar;
 	private int messageUnRead;
 	private String lastMessage;
-	private Date online;
+	private String online;
 	private boolean isFriend;
-	private boolean status;
+	private String typeMessage;
+	private boolean recall;
 	
 
 	public enum MessageType {

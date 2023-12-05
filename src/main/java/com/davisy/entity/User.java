@@ -2,8 +2,10 @@ package com.davisy.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -52,10 +54,10 @@ public class User implements UserDetails {
 	String intro;
 
 	@Temporal(TemporalType.DATE)
-	Date birthday;
+	Calendar birthday = GregorianCalendar.getInstance();
 
 	@Temporal(TemporalType.DATE)
-	Date day_create = new Date();
+	Calendar day_create = GregorianCalendar.getInstance();
 
 	@ManyToOne
 	@JoinColumn(name = "gender_id")
@@ -80,19 +82,17 @@ public class User implements UserDetails {
 	String thumb;
 
 	@Temporal(TemporalType.DATE)
-	Date online_last_date;
+	Calendar online_last_date = GregorianCalendar.getInstance();
 
 	int mark;
 
 	boolean user_status;
 
 	boolean ban;
-	
-	String gg_id;
-	
-	String fb_id;
 
-	String sub;
+	String gg_id;
+
+	String fb_id;
 
 	@JsonIgnore
 	@ManyToMany(fetch = FetchType.LAZY, targetEntity = Roles.class)
@@ -102,6 +102,10 @@ public class User implements UserDetails {
 	@JsonIgnore
 	@OneToMany(mappedBy = "user")
 	List<Post> posts;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "user")
+	List<SendReciever> send_reciever;
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "user")
@@ -115,12 +119,25 @@ public class User implements UserDetails {
 	@OneToMany(mappedBy = "user")
 	List<Share> shares;
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "user")
 	List<Messages> messages;
 
 //	@JsonIgnore
 //	@OneToMany(mappedBy = "user")
 //	List<Follower> followers;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "userSendReport")
+	List<PostReported> postReporteds;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "userSendReport")
+	List<UserReported> userSendReports;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "userReported")
+	List<UserReported> userReporteds;
 
 	@JsonIgnore
 	public String[] getAuth() {
@@ -136,6 +153,24 @@ public class User implements UserDetails {
 		if (wards == null || districts == null || provinces == null)
 			return null;
 		return wards.full_name + ". " + districts.full_name + ". " + provinces.full_name;
+	}
+	
+	public String getIdProvince() {
+		if(provinces==null)
+			return null;
+		return provinces.getCode();
+	}
+	
+	public String getIdDistrict() {
+		if(districts==null)
+			return null;
+		return districts.getCode();
+	}
+	
+	public String getIdWard() {
+		if(wards==null)
+			return null;
+		return wards.getCode();
 	}
 
 	@Override

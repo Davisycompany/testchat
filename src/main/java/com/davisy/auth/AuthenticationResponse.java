@@ -17,6 +17,8 @@ import lombok.NoArgsConstructor;
 public class AuthenticationResponse {
 	String name;
 	Collection<SimpleGrantedAuthority> roles = new ArrayList<>();
+	int id;
+	String avatar;
 	String token;
 	String refreshToken;
 }

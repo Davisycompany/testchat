@@ -1,7 +1,11 @@
 package com.davisy.entity;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,6 +30,7 @@ public class Comment {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	int comment_id;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	User user;
@@ -34,12 +39,13 @@ public class Comment {
 	@JoinColumn(name = "parent_comment_id")
 	Comment commentParent;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "post_id")
 	Post post;
 	
-	@Temporal(TemporalType.DATE)
-	Date date_comment = new Date();
+	@Temporal(TemporalType.TIMESTAMP)
+	Calendar date_comment= GregorianCalendar.getInstance(TimeZone.getTimeZone("GMT+7"));
 	
 	String content;
 	

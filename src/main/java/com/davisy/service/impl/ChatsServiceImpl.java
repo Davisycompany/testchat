@@ -24,8 +24,8 @@ public class ChatsServiceImpl implements ChatsService {
 	}
 
 	@Override
-	public Chats findChatNames(String name) {
-		return chatDAO.findChatNames(name);
+	public Chats findChatNames(String nameChat, String chatName) {
+		return chatDAO.findChatNames(nameChat + chatName, chatName + nameChat);
 	}
 
 	@Override
@@ -39,6 +39,37 @@ public class ChatsServiceImpl implements ChatsService {
 		if (chats == null)
 			return false;
 		return true;
+	}
+
+	@Override
+	public void create(Chats chats) {
+		if (chats != null) {
+			chatDAO.save(chats);
+		}
+	}
+
+	@Override
+	public void update(Chats chats) {
+		if (chats != null) {
+			chatDAO.saveAndFlush(chats);
+		}
+	}
+
+	@Override
+	public void delete(Chats chats) {
+		if (chats != null) {
+			chatDAO.delete(chats);
+		}
+	}
+
+	@Override
+	public List<Object[]> loadAllChatRoom(int id) {
+		return chatDAO.loadAllChatRoom(id);
+	}
+
+	@Override
+	public void update_name_chats(int id, String chats_name) {
+		chatDAO.update_name_chats(id, chats_name);
 	}
 
 }
